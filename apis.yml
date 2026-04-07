@@ -1,7 +1,11 @@
 aid: apollo-global-management
-url: https://raw.githubusercontent.com/api-evangelist/apollo-global-management/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/apollo-global-management/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.apollo-global-management.com
+description: >-
+  Apollo Global Management is a global alternative investment manager providing private
+  equity, credit, and real assets strategies to institutional and individual investors.
