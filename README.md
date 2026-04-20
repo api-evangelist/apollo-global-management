@@ -1,33 +1,25 @@
 # Apollo Global Management (apollo-global-management)
-Apollo Global Management is a Fortune 500 company. This repository captures the APIs, developer tools, and machine-readable API artifacts for Apollo Global Management.
+Apollo Global Management is a global alternative investment manager providing private equity, credit, and real assets strategies to institutional and individual investors. With over $840 billion in assets under management, Apollo focuses on delivering excess returns through its private equity, credit, and real assets business segments. Apollo does not have a public developer API program.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/apollo-global-management/refs/heads/main/apis.yml)
+**URL:** [https://www.apollo.com/](https://www.apollo.com/)
 
-## Scope
-
-- **Type:** Contract
-- **Position:** Consuming
-- **Access:** 3rd-Party
+**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
 
 ## Tags:
 
- - Fortune 500
+ - Alternative Investments, Asset Management, Credit, Finance, Investment Management, Private Equity, Real Assets
 
 ## Timestamps
 
 - **Created:** 2026-03-21
-- **Modified:** 2026-03-21
-
-## APIs
-
-No public APIs have been documented yet. Contributions welcome.
+- **Modified:** 2026-04-19
 
 ## Common Properties
 
-- [Website](https://www.apollo-global-management.com)
+- [Documentation](https://www.apollo.com/)
 
 ## Maintainers
 
-**FN:** API Evangelist
+**FN:** Kin Lane
 
 **Email:** info@apievangelist.com
