@@ -15,7 +15,7 @@ deliveryModel:
   model: unknown
   open_source: false
   commercial: false
-  callable_host: false
+  callable_host: true
   label: Delivery model not determined — needs a product licence on record
   confidence: low
   source:
@@ -36,19 +36,85 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apollo-global-management.png
 access: 3rd-Party
 created: '2026-03-21'
-modified: '2026-04-19'
-position: Consumer
+modified: '2026-09-04'
+position: Consuming
 description: >-
-  Apollo Global Management is a global alternative investment manager providing private
-  equity, credit, and real assets strategies to institutional and individual investors.
-  With over $840 billion in assets under management, Apollo focuses on delivering
-  excess returns through its private equity, credit, and real assets business segments.
-  Apollo does not have a public developer API program.
-apis: []
+  Apollo Global Management (NYSE: APO) is a global alternative asset manager and
+  retirement services provider, running private equity, credit and real assets strategies
+  for institutional investors, family offices and global wealth channels, with over $840
+  billion in assets under management. Apollo runs no public developer program: it
+  publishes no OpenAPI, GraphQL schema, AsyncAPI, SDK, developer portal or API
+  documentation of any kind, and a full enumeration of its 4,784-URL sitemap contains no
+  /api or /developer path. It does operate one machine-readable surface that was found by
+  probe rather than by documentation — an OAuth 2.0 authorization server on api.apollo.com
+  whose authorization, token and dynamic client registration endpoints sit under /mcp/,
+  fronting a Model Context Protocol resource declared at
+  https://api.apollo.com/.well-known/oauth-protected-resource/mcp. That endpoint is
+  undocumented and not anonymously routable, so its tool surface is unknown.
+apis:
+  - name: Apollo MCP Server
+    description: >-
+      An undocumented Model Context Protocol server operated by Apollo Global Management
+      on its own API host. Its existence is established by two first-party discovery
+      documents fetched on 2026-09-04: RFC 8414 authorization server metadata at
+      https://api.apollo.com/.well-known/oauth-authorization-server, whose issuer is
+      https://api.apollo.com and whose authorize/token/register endpoints are namespaced
+      under /mcp/, and RFC 9728 protected resource metadata at
+      https://api.apollo.com/.well-known/oauth-protected-resource/mcp naming
+      https://api.apollo.com/mcp as the protected resource. Access is authorization-code
+      with PKCE S256 as a public client, with open dynamic client registration. Anonymous
+      GET and POST to the endpoint return HTTP 404 at the edge rather than a 401
+      challenge, so no tools/list response was obtainable and the tool surface is not
+      recorded anywhere in this repository.
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apollo-global-management.png
+    humanURL: https://www.apollo.com/
+    baseURL: https://api.apollo.com/mcp
+    tags:
+      - MCP
+      - Agents
+      - Asset Management
+    properties:
+      - type: MCPServer
+        url: mcp/apollo-global-management-mcp.yml
+      - type: Authentication
+        url: authentication/apollo-global-management-authentication.yml
+      - type: OAuthScopes
+        url: scopes/apollo-global-management-scopes.yml
 common:
-  - type: Documentation
+  - type: DomainSecurity
+    url: security/apollo-global-management-domain-security.yml
+  - type: Website
     url: https://www.apollo.com/
+  - type: Blog
+    url: https://www.apollo.com/insights-news
+  - type: Support
+    url: https://www.apollo.com/aboutus/contact-us
+  - type: TermsOfService
+    url: https://www.apollo.com/governance/terms-of-use
+  - type: PrivacyPolicy
+    url: https://www.apollo.com/governance/privacy-policy
+  - type: MCPServer
+    url: mcp/apollo-global-management-mcp.yml
+  - type: WellKnown
+    url: well-known/apollo-global-management-well-known.yml
+  - type: Authentication
+    url: authentication/apollo-global-management-authentication.yml
+  - type: OAuthScopes
+    url: scopes/apollo-global-management-scopes.yml
+  - type: Conformance
+    url: conformance/apollo-global-management-conformance.yml
+  - type: Plans
+    url: plans/apollo-global-management-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/apollo-global-management-rate-limits.yml
+  - type: LLMsTxt
+    url: llms/apollo-global-management-llms.txt
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.23'
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v3
