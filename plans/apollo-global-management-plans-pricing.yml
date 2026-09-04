@@ -1,0 +1,28 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://www.apollo.com/sitemap.xml (HTTP 200, 4,784 URLs) enumerated and searched for a
+  pricing, plans, developer or API path; https://www.apollo.com/ (HTTP 200) read for a
+  product/pricing surface. Searched 2026-09-04.
+description: >-
+  Apollo Global Management publishes no API plans, no developer pricing and no
+  self-service sign-up of any kind. It is an alternative asset manager: its commercial
+  surface is fund subscription and separately managed accounts sold through institutional
+  sales, private-wealth distribution partners and financial advisers, all of which run
+  through relationship channels rather than a published price list. The one API surface
+  the estate exposes — the MCP server on api.apollo.com — is not marketed, not documented
+  and not purchasable.
+plan_count: 0
+plans: []
+evidence:
+  - url: https://www.apollo.com/sitemap.xml
+    status: 200
+    note: >-
+      No /pricing, /plans, /api, /apis, /developer or /developers path segment among 4,784
+      URLs. Top-level sections are wealth, institutional, insights-news, aboutus,
+      strategies, governance, careers, impact and jp.
+  - url: https://api.apollo.com/.well-known/oauth-authorization-server
+    status: 200
+    note: >-
+      Open dynamic client registration is advertised, but registration is an OAuth client
+      identity, not a commercial plan; no tier, quota or price is published for it.

@@ -1,0 +1,32 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://www.apollo.com/sitemap.xml (HTTP 200) searched for developer or API
+  documentation; https://api.apollo.com/.well-known/oauth-authorization-server and
+  /.well-known/oauth-protected-resource/mcp (HTTP 200) inspected for rate-limit headers.
+  Searched and probed 2026-09-04.
+description: >-
+  Apollo Global Management documents no rate limits, because it documents no API. The one
+  reachable API-adjacent surface — the discovery documents on api.apollo.com — returned no
+  rate-limit response headers of any kind, and the MCP endpoint they point at is not
+  anonymously routable, so no runtime limit signal could be observed there either.
+limit_count: 0
+limits: []
+headers: []
+headers_note: >-
+  Responses from api.apollo.com carry x-azure-ref, x-cache, x-served-by and
+  x-webserver-id. No X-RateLimit-*, no RateLimit-*, no Retry-After was returned on any of
+  roughly sixty probes on 2026-09-04.
+exhaustion_status: unknown
+evidence:
+  - url: https://api.apollo.com/.well-known/oauth-authorization-server
+    status: 200
+    note: No rate-limit headers present in the response.
+  - url: https://api.apollo.com/mcp
+    status: 404
+    note: >-
+      Anonymous POST is not routed, so the limits an authenticated MCP session runs under
+      cannot be observed without an Apollo client identity.
+  - url: https://www.apollo.com/sitemap.xml
+    status: 200
+    note: No developer documentation exists in which limits could be published.

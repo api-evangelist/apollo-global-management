@@ -1,0 +1,98 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  https://api.apollo.com/.well-known/oauth-protected-resource/mcp (HTTP 200,
+  application/json) and https://api.apollo.com/.well-known/oauth-authorization-server
+  (HTTP 200, application/json), both fetched 2026-09-04.
+name: Apollo MCP server (api.apollo.com)
+status: undocumented-auth-gated
+description: >-
+  Apollo Global Management operates a Model Context Protocol server on its own API host.
+  Nothing on any public Apollo page mentions it; it was found by probing api.apollo.com,
+  which serves RFC 8414 authorization-server metadata whose authorization, token and
+  dynamic-client-registration endpoints all live under /mcp/, plus an RFC 9728
+  protected-resource document at /.well-known/oauth-protected-resource/mcp naming
+  https://api.apollo.com/mcp as the protected resource. The application layer's CORS
+  policy is MCP-shaped: it allows the mcp-protocol-version request header and exposes
+  mcp-session-id and WWW-Authenticate.
+ownership:
+  verdict: first-party
+  rationale: >-
+    The authorization server metadata self-identifies issuer as https://api.apollo.com and
+    the protected resource as https://api.apollo.com/mcp — Apollo Global Management's own
+    registrable domain, on a certificate issued to CN=api.apollo.com, on an Azure Front
+    Door endpoint (invest-prod-*.z01.azurefd.net) separate from the third-party stack that
+    serves client.apollo.com. Judged by what the documents say about themselves, not by
+    where they were fetched.
+  not_to_be_confused_with:
+    - >-
+      Apollo.io (apollo.io) — a different company; its sales-intelligence MCP product is
+      the only thing a web search for "Apollo MCP" returns.
+    - >-
+      Apollo GraphQL (apollographql.com) — a different company; it publishes the
+      open-source apollo-mcp-server project.
+    - >-
+      Vega AltOS — the third-party private-markets client-service platform running at
+      client.apollo.com and investor.apollo.com, whose own protected-resource document
+      declares `api://vega-mcp` behind apolloid.okta.com. Apollo is an investor and anchor
+      client, not the author. That surface is recorded in well-known/ and deliberately not
+      claimed here.
+deployment:
+  mode: remote
+  endpoint: https://api.apollo.com/mcp
+  auth: oauth
+  verified: probed
+authorization:
+  issuer: https://api.apollo.com
+  authorization_endpoint: https://api.apollo.com/mcp/authorize
+  token_endpoint: https://api.apollo.com/mcp/token
+  registration_endpoint: https://api.apollo.com/mcp/register
+  grant_types_supported:
+    - authorization_code
+    - refresh_token
+  response_types_supported:
+    - code
+  code_challenge_methods_supported:
+    - S256
+  token_endpoint_auth_methods_supported:
+    - none
+  scopes_supported:
+    - openid
+    - profile
+    - email
+    - offline_access
+  bearer_methods_supported:
+    - header
+  dynamic_client_registration: true
+  notes: >-
+    A public-client PKCE flow with open dynamic client registration (RFC 7591) — the shape
+    an MCP client such as Claude or an IDE agent is expected to complete on its own.
+reachability:
+  anonymous_tools_list: unreachable
+  observed:
+    - probe: 'POST https://api.apollo.com/mcp {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+      status: 404
+      note: >-
+        Apache-style HTML 404 from the edge, repeated across eight attempts and across
+        backends (ue2-Web2 / ue2-Web3), with and without an Origin header and with the
+        session-affinity cookies set. Not a 401 challenge — the edge does not route
+        anonymous traffic to /mcp at all.
+    - probe: 'GET https://api.apollo.com/mcp'
+      status: 404
+    - probe: 'OPTIONS https://api.apollo.com/mcp (CORS preflight, Origin https://claude.ai)'
+      status: 200
+      note: 'allow: OPTIONS,HEAD,GET,POST,TRACE'
+    - probe: 'GET https://api.apollo.com/mcp/authorize'
+      status: 404
+    - probe: 'GET https://api.apollo.com/.well-known/oauth-protected-resource'
+      status: 302
+      note: 'Location: /login/okta?next=%2F.well-known%2Foauth-protected-resource'
+  consequence: >-
+    The tool set is NOT known. No tools/list response was obtained, so no tool names,
+    descriptions or inputSchemas are recorded here. Nothing has been invented to fill the
+    gap. Establishing the tool surface requires an authenticated Apollo client identity;
+    an authenticated introspection is the only way to complete this artifact.
+tools: []
+tools_note: >-
+  Empty because the live schema is gated and Apollo publishes no OpenAPI to derive
+  candidates from — not because the server has no tools.

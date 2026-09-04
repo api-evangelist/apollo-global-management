@@ -1,0 +1,183 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  Direct HTTP probes of the named /.well-known/ path list against every host the record
+  knows: the registrable domain (apollo.com) and www, the investor-relations host
+  (ir.apollo.com), the API host discovered by subdomain resolution (api.apollo.com), the
+  two client/investor portal hosts (client.apollo.com, investor.apollo.com) and the
+  research/education site (apolloacademy.com). Status is the HTTP code observed at fetch
+  time on 2026-09-04.
+description: >-
+  Apollo Global Management publishes no security.txt and no api-catalog anywhere on its
+  estate. It DOES publish a live OAuth 2.0 / OpenID Connect discovery surface on
+  api.apollo.com, and that surface is MCP-shaped: the authorization, token and dynamic
+  client registration endpoints all sit under /mcp/, and
+  /.well-known/oauth-protected-resource/mcp returns an RFC 9728 protected-resource
+  document naming https://api.apollo.com/mcp as the protected resource. None of this is
+  documented on any public Apollo page — it was found by probe. See
+  mcp/apollo-global-management-mcp.yml.
+notes:
+  - >-
+    www.apollo.com returns a hard 404 with a real 404 page for every probed path — a clean
+    negative, not a soft-404.
+  - >-
+    investor.apollo.com answers 200 with a 2,744-byte React SPA shell for EVERY path,
+    including /openapi.json and /llms.txt. Those are recorded as 200 but are NOT documents
+    and nothing was saved from them.
+  - >-
+    client.apollo.com is CloudFront over S3: absent keys return 403 AccessDenied. One path
+    is a real document — /.well-known/oauth-protected-resource — but it declares the
+    resource `api://vega-mcp` behind apolloid.okta.com. That application is Vega AltOS, a
+    third-party private-markets client-service platform in which Apollo is an investor and
+    anchor client (Apollo press release, 2024-11-12). The document is saved for the record
+    and explicitly NOT credited to Apollo as a first-party contract.
+hosts:
+  - host: https://www.apollo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+  - host: https://api.apollo.com
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        type: application/json
+        file: apollo-global-management-api-oauth-authorization-server.json
+        note: >-
+          RFC 8414 authorization server metadata. issuer https://api.apollo.com;
+          authorization/token/registration endpoints under /mcp/; PKCE S256 required;
+          dynamic client registration (RFC 7591) open with
+          token_endpoint_auth_methods_supported ["none"] — a public-client MCP flow.
+      - path: /.well-known/openid-configuration
+        status: 200
+        type: application/json
+        file: apollo-global-management-api-openid-configuration.json
+        note: Byte-identical to the RFC 8414 document above.
+      - path: /.well-known/oauth-protected-resource/mcp
+        status: 200
+        type: application/json
+        file: apollo-global-management-api-oauth-protected-resource-mcp.json
+        note: >-
+          RFC 9728 protected-resource metadata naming https://api.apollo.com/mcp as the
+          resource, with https://api.apollo.com as its authorization server.
+      - path: /.well-known/oauth-protected-resource
+        status: 302
+        note: >-
+          Redirects to /login/okta?next=... — the application layer answers, and its CORS
+          headers expose WWW-Authenticate and mcp-session-id and allow the
+          mcp-protocol-version request header. Not a document; nothing saved.
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+  - host: https://ir.apollo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://investor.apollo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        type: text/html
+        note: SPA shell, not a document. Not saved.
+      - path: /.well-known/openid-configuration
+        status: 200
+        type: text/html
+        note: SPA shell, not a document. Not saved.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        type: text/html
+        note: SPA shell, not a document. Not saved.
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        type: text/html
+        note: SPA shell, not a document. Not saved.
+      - path: /.well-known/api-catalog
+        status: 200
+        type: text/html
+        note: SPA shell, not a document. Not saved.
+      - path: /.well-known/agent-card.json
+        status: 200
+        type: text/html
+        note: >-
+          SPA shell, not an AgentCard. This is the dominant false positive on the A2A
+          probe and is explicitly rejected — no agent card was found for Apollo.
+      - path: /.well-known/agent.json
+        status: 200
+        type: text/html
+        note: SPA shell, not an AgentCard. Rejected.
+  - host: https://client.apollo.com
+    documents:
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        type: application/json
+        file: apollo-global-management-client-oauth-protected-resource.json
+        note: >-
+          Real RFC 9728 document, but it describes `api://vega-mcp` behind
+          apolloid.okta.com — the Vega AltOS platform Apollo runs its client service on,
+          not an Apollo-authored contract. Recorded, not credited.
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: https://apolloacademy.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404

@@ -1,0 +1,67 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  https://api.apollo.com/.well-known/oauth-authorization-server and
+  https://api.apollo.com/.well-known/oauth-protected-resource/mcp, both HTTP 200
+  application/json, fetched 2026-09-04. Apollo publishes no authentication documentation
+  page; this profile is read entirely from the machine-readable discovery documents.
+description: >-
+  Apollo Global Management's only discoverable authentication surface is the OAuth 2.0 /
+  OpenID Connect authorization server on api.apollo.com that fronts its MCP endpoint. It
+  is an authorization-code + PKCE public-client flow with open dynamic client
+  registration. There is no API-key surface, no mutual-TLS surface, and no published
+  developer authentication guide.
+schemes:
+  - id: apollo_mcp_oauth2
+    type: oauth2
+    flow: authorizationCode
+    issuer: https://api.apollo.com
+    authorization_url: https://api.apollo.com/mcp/authorize
+    token_url: https://api.apollo.com/mcp/token
+    registration_url: https://api.apollo.com/mcp/register
+    pkce: required
+    pkce_methods:
+      - S256
+    client_authentication:
+      - none
+    client_type: public
+    dynamic_client_registration: true
+    dynamic_client_registration_spec: RFC 7591
+    refresh_tokens: true
+    scopes:
+      - openid
+      - profile
+      - email
+      - offline_access
+    bearer_methods:
+      - header
+    protected_resources:
+      - resource: https://api.apollo.com/mcp
+        scopes:
+          - openid
+          - profile
+          - email
+        metadata: https://api.apollo.com/.well-known/oauth-protected-resource/mcp
+    evidence: https://api.apollo.com/.well-known/oauth-authorization-server
+identity_providers:
+  - name: Okta
+    host: api.apollo.com
+    evidence: >-
+      GET https://api.apollo.com/.well-known/oauth-protected-resource returns 302 to
+      /login/okta?next=... — the interactive login behind this authorization server is
+      Okta-backed.
+  - name: Okta (apolloid.okta.com)
+    host: client.apollo.com
+    org: https://apolloid.okta.com/oauth2/ausyhvwbuxKgY0uyZ4x7
+    evidence: https://client.apollo.com/.well-known/oauth-protected-resource
+    note: >-
+      Apollo's client/investor portal identity. The resource it protects (`api://vega-mcp`)
+      belongs to the third-party Vega AltOS platform, not to Apollo — recorded for
+      completeness, not claimed as an Apollo contract.
+gaps:
+  - No published authentication documentation page for any Apollo API.
+  - No API-key or personal-access-token surface found.
+  - >-
+    Scope semantics beyond the four standard OIDC/offline_access values are not published;
+    what an Apollo access token actually authorizes cannot be determined from public
+    documents.

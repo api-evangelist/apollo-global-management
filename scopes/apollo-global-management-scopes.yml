@@ -1,0 +1,49 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  https://api.apollo.com/.well-known/oauth-authorization-server (scopes_supported) and
+  https://api.apollo.com/.well-known/oauth-protected-resource/mcp (scopes_supported),
+  both HTTP 200, fetched 2026-09-04.
+description: >-
+  The complete scope surface Apollo Global Management advertises. It is the standard
+  OpenID Connect set plus offline_access — no Apollo-specific business scopes are
+  published. Apollo has no scopes or permissions reference page; a documentation search
+  across www.apollo.com (4,784 sitemap URLs, no /api or /developer path segment anywhere)
+  found none, so nothing could be added beyond what the discovery documents declare.
+docs: null
+docs_note: No scopes/permissions reference page is published by Apollo.
+authorization_server: https://api.apollo.com
+scopes:
+  - name: openid
+    description: >-
+      Standard OpenID Connect scope requesting an ID token. Advertised by both the
+      authorization server and the MCP protected resource.
+    standard: openid-connect-core
+    resources:
+      - https://api.apollo.com/mcp
+  - name: profile
+    description: >-
+      Standard OpenID Connect scope for basic profile claims. Advertised by both the
+      authorization server and the MCP protected resource.
+    standard: openid-connect-core
+    resources:
+      - https://api.apollo.com/mcp
+  - name: email
+    description: >-
+      Standard OpenID Connect scope for the email and email_verified claims. Advertised by
+      both the authorization server and the MCP protected resource.
+    standard: openid-connect-core
+    resources:
+      - https://api.apollo.com/mcp
+  - name: offline_access
+    description: >-
+      Standard scope requesting a refresh token. Advertised by the authorization server
+      only; the MCP protected-resource document does not list it.
+    standard: openid-connect-core
+    resources: []
+scope_count: 4
+gaps:
+  - >-
+    No resource-specific or business-domain scopes are advertised. Whatever the MCP server
+    lets an authorized agent read or write is not expressed in the scope surface, so an
+    integrator cannot reason about least privilege from public documents.

@@ -1,0 +1,94 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  Derived from the discovery documents actually fetched from api.apollo.com on 2026-09-04.
+  Every entry below cites the exact URL whose CONTENT demonstrates the conformance; no
+  entry rests on a marketing claim.
+description: >-
+  Apollo Global Management publishes no API contract and no compliance/standards page, so
+  the only assertable conformance is the set of IETF and OpenID specifications its
+  authorization surface on api.apollo.com demonstrably implements. Its market's domain
+  standards (FIX, MiFID II, ISO 20022) are not declared anywhere machine-readable.
+conformance:
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749) authorization code grant
+    conforms: true
+    evidence: https://api.apollo.com/.well-known/oauth-authorization-server
+    note: >-
+      grant_types_supported ["authorization_code","refresh_token"],
+      response_types_supported ["code"].
+  - id: rfc8414
+    name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+    conforms: true
+    evidence: https://api.apollo.com/.well-known/oauth-authorization-server
+    note: Served at the registered well-known path with issuer, endpoints and scopes.
+  - id: rfc7636
+    name: PKCE (RFC 7636)
+    conforms: true
+    evidence: https://api.apollo.com/.well-known/oauth-authorization-server
+    note: code_challenge_methods_supported ["S256"] — plain is not offered.
+  - id: rfc7591
+    name: OAuth 2.0 Dynamic Client Registration (RFC 7591)
+    conforms: true
+    evidence: https://api.apollo.com/.well-known/oauth-authorization-server
+    note: registration_endpoint https://api.apollo.com/mcp/register is advertised.
+  - id: rfc9728
+    name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+    conforms: true
+    evidence: https://api.apollo.com/.well-known/oauth-protected-resource/mcp
+    note: >-
+      Returns resource, authorization_servers, bearer_methods_supported and
+      scopes_supported for https://api.apollo.com/mcp.
+  - id: oidc-discovery
+    name: OpenID Connect Discovery 1.0
+    conforms: partial
+    evidence: https://api.apollo.com/.well-known/openid-configuration
+    note: >-
+      The document is served at the OIDC discovery path but is byte-identical to the RFC
+      8414 metadata: it omits jwks_uri, userinfo_endpoint, subject_types_supported and
+      id_token_signing_alg_values_supported, all REQUIRED by OpenID Connect Discovery 1.0.
+      It advertises the openid scope without publishing the keys to verify an ID token.
+  - id: mcp
+    name: Model Context Protocol (streamable HTTP transport, OAuth profile)
+    conforms: true
+    evidence: https://api.apollo.com/.well-known/oauth-protected-resource/mcp
+    note: >-
+      Protected resource https://api.apollo.com/mcp, authorization endpoints namespaced
+      under /mcp/, and the application's CORS policy allows the mcp-protocol-version
+      request header while exposing mcp-session-id and WWW-Authenticate. The MCP endpoint
+      itself is not anonymously routable, so protocol-version negotiation could not be
+      observed.
+  - id: rfc9116
+    name: security.txt (RFC 9116)
+    conforms: false
+    evidence: https://www.apollo.com/.well-known/security.txt
+    note: HTTP 404 on every Apollo host probed.
+  - id: rfc9457
+    name: Problem Details for HTTP APIs (RFC 9457)
+    conforms: unknown
+    evidence: https://api.apollo.com/api
+    note: >-
+      The gateway's own 404 body is {"statusCode":404,"message":"Resource not found"} —
+      a bespoke envelope, not application/problem+json. One observed response is not
+      enough to characterise the error surface, and no contract is published.
+domain_standard:
+  declared: false
+  market: Securities & market data / alternative asset management
+  candidates_checked:
+    - fix-protocol
+    - mifid-ii
+    - iso-20022
+  evidence:
+    - url: https://www.apollo.com/sitemap.xml
+      status: 200
+      note: >-
+        4,784 URLs; no /api, /apis, /developer or /developers path segment anywhere, and
+        no standards or compliance reference page that names a domain standard.
+    - url: https://api.apollo.com/.well-known/oauth-authorization-server
+      status: 200
+      note: >-
+        The only machine-readable contract surface Apollo serves carries no domain-standard
+        signature — no schema URNs, no $metadata surface, no message-type vocabulary.
+  note: >-
+    Reward-only dimension. Apollo declares no domain standard in any contract it publishes.
+    This is recorded as an honest absence, not scored as a failure.
