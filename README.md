@@ -1,4 +1,4 @@
-# Apollo Global Management (apollo-global-management)
+# Apollo Global Management
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,27 +64,114 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Apollo Global Management is a global alternative investment manager providing private equity, credit, and real assets strategies to institutional and individual investors. With over $840 billion in assets under management, Apollo focuses on delivering excess returns through its private equity, credit, and real assets business segments. Apollo does not have a public developer API program.
+Apollo Global Management (NYSE: APO) is a global alternative asset manager and retirement services provider, running private equity, credit and real assets strategies for institutional investors, family offices and global wealth channels, with over $840 billion in assets under management. Apollo runs no public developer program: it publishes no OpenAPI, GraphQL schema, AsyncAPI, SDK, developer portal or API documentation of any kind, and a full enumeration of its 4,784-URL sitemap contains no /api or /developer path. It does operate one machine-readable surface that was found by probe rather than by documentation — an OAuth 2.0 authorization server on api.apollo.com whose authorization, token and dynamic client registration endpoints sit under /mcp/, fronting a Model Context Protocol resource declared at https://api.apollo.com/.well-known/oauth-protected-resource/mcp. That endpoint is undocumented and not anonymously routable, so its tool surface is unknown.
 
-**URL:** [https://www.apollo.com/](https://www.apollo.com/)
+**Areas:** Alternative Investments · Asset Management · Credit · Finance · Investment Management · Private Equity · Real Assets
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## Apollo Global Management on APIs.io
 
-## Tags:
+Everything profiled for Apollo Global Management is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/apollo-global-management/](https://apis.io/providers/apollo-global-management/)** — or go straight to one of the APIs or properties below.
 
- - Alternative Investments, Asset Management, Credit, Finance, Investment Management, Private Equity, Real Assets
+### APIs (1)
 
-## Timestamps
+- [Apollo MCP Server](https://apis.io/apis/apollo-global-management/apollo-mcp-server/) — An undocumented Model Context Protocol server operated by Apollo Global Management on its own API host. Its existence is established by two first-party…
 
-- **Created:** 2026-03-21
-- **Modified:** 2026-04-19
+### Published properties
 
-## Common Properties
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- [Documentation](https://www.apollo.com/)
+#### MCP servers (1)
 
-## Maintainers
+Model Context Protocol servers that expose the API to agents.
 
-**FN:** Kin Lane
+- [Apollo MCP server (api.apollo.com)](https://apis.io/servers/apollo-global-management/apollo-mcp-server-api-apollo-com/)
 
-**Email:** info@apievangelist.com
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Apollo Global Management Authentication](https://apis.io/security/apollo-global-management/apollo-global-management-authentication/)
+- [Apollo Global Management Domain Security](https://apis.io/security/apollo-global-management/apollo-global-management-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Apollo Global Management Scopes](https://apis.io/scopes/apollo-global-management/apollo-global-management-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Apollo Global Management Plans Pricing](https://apis.io/plans/apollo-global-management/apollo-global-management-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Apollo Global Management Rate Limits](https://apis.io/rate-limits/apollo-global-management/apollo-global-management-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.apollo.com/)
+- [Support](https://www.apollo.com/aboutus/contact-us)
+- [Blog](https://www.apollo.com/insights-news)
+- [Terms of service](https://www.apollo.com/governance/terms-of-use)
+- [Privacy policy](https://www.apollo.com/governance/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 20.6** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 19.0 |
+| Access clarity | 21.1 |
+
+**Agent readiness 24.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/apollo-global-management/](https://apis.io/providers/apollo-global-management/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Apollo Global Management: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/apollo-global-management/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
